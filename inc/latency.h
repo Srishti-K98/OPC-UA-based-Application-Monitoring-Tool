@@ -18,21 +18,15 @@
 #include <time.h> 
 #include <string.h>
 
-struct timespec serverConnectionTime, clientConnectionTime, latency; 
 UA_Server* server = NULL;     
 UA_Client* client = NULL;     
 UA_Variant value;  
 struct timespec ts;
 
-UA_Boolean running = true; 
-void signalHandler(int sig) 
-{ 
-    running = false; 
-} 
+
 
 FILE *file;
 
 //function declarations 
 int startserver(); 
 int startclient(int argc, char *argv[]); 
-void calculateLatency();
