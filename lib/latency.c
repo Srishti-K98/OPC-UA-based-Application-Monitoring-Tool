@@ -36,7 +36,7 @@ helloWorldMethodCallback(UA_Server *server,
     UA_Variant_setScalarCopy(output, &outputStr, &UA_TYPES[UA_TYPES_STRING]);
     UA_String_clear(&outputStr);
     
-    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "Current time was called");
+    //UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "Current time was called");
     
     return UA_STATUSCODE_GOOD;
 }
