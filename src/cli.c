@@ -11,7 +11,7 @@ int main(int argc, char* argv[])
         printf("       %s start client <ip_address>\n", argv[0]); 
         return 1; 
     } 
-    else if (strcmp(argv[1], "start") == 0)  
+    if (strcmp(argv[1], "start") == 0)  
     { 
         if (argc < 3)  
         { 
@@ -22,6 +22,7 @@ int main(int argc, char* argv[])
         } 
         if (strcmp(argv[2], "server") == 0)  
         { 
+            printf("Check 1");
             startserver();                                                                        //start server                                                    
         }  
         else if (strcmp(argv[2], "client") == 0)  
@@ -44,12 +45,15 @@ int main(int argc, char* argv[])
             pid_t pid = fork(); 
             if (pid == 0)  
             { 
+                printf("Check 1");
                 startclient(argc, argv);                                                  //start client                                
                 exit(0); 
             }  
             else if (pid > 0)  
             { 
-                printf("Redundant\n");
+                //signal(SIGINT, signalHandler);  // Handle Ctrl+C in the parent process
+                printf("Check 3");
+                wait(NULL);
             } 
             else 
             { 
