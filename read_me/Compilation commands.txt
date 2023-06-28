@@ -1,0 +1,32 @@
+1. Navigate to AppLatency directory: 
+
+"cd AppLatency"
+
+2. Compiling latency.c file against the latency.h file and creating the shared library which is also linked to open62541 library
+
+"gcc -I./inc -fPIC -o ./lib/libAppLatency.so -shared ./lib/latency.c -lopen62541"
+
+--> this command compiles the latency.c file located in the lib directory, with header files searched in the inc directory. The resulting shared object file libAppLatency.so is generated and placed in the lib directory.
+
+3. Compiling the cli.c file
+
+Running server:
+"gcc -I./inc -L./lib -o cli src/cli.c -lAppLatency -Wl,-rpath,./lib"
+
+"./cli start server"  
+
+Running client:
+"gcc -I./inc -L./lib -o cli src/cli.c -lAppLatency -Wl,-rpath,./lib"
+
+"./cli start client opc.tcp://localhost:4840"  
+
+
+
+
+
+
+
+////"export LD_LIBRARY_PATH=./lib:$LD_LIBRARY_PATH"
+
+
+
