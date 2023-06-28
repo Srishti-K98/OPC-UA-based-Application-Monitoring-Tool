@@ -23,8 +23,6 @@ UA_Client* client = NULL;
 UA_Variant value;  
 struct timespec ts;
 
-
-
 FILE *file;
 
 //function declarations 
