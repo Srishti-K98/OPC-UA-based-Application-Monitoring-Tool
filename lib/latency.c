@@ -78,7 +78,7 @@ int startserver()
 { 
     signal(SIGINT, signalHandler); 
 
-    UA_Server *server = UA_Server_new();
+    server = UA_Server_new();
     addHelloWorldMethod(server);
 
     UA_StatusCode retval = UA_Server_runUntilInterrupt(server);
@@ -89,9 +89,9 @@ int startserver()
 
 int startclient(int argc, char *argv[]) 
 { 
-    printf("Check 2\n");
     UA_Boolean running = true;
-    UA_Client *client = UA_Client_new();
+
+    client = UA_Client_new();
     UA_ClientConfig_setDefault(UA_Client_getConfig(client));
 
     // Connect to the server
@@ -118,19 +118,14 @@ int startclient(int argc, char *argv[])
         printf("Error opening the file.\n");
         return 1;
     }
-    printf("File opened\n");
         clock_gettime(CLOCK_REALTIME, &clientTime);
 
         UA_StatusCode retval = UA_Client_call(client, UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER),
                                               UA_NODEID_NUMERIC(1, 62541), 0, NULL, &outputSize, &ptr_output);
 
-        printf("Client method call time: ");
-        printf("%ld%09ld\n", clientTime.tv_sec, clientTime.tv_nsec);
+        //printf("Client method call time: ");printf("%ld%09ld\n", clientTime.tv_sec, clientTime.tv_nsec);
 
         if (retval == UA_STATUSCODE_GOOD) {
-            printf("Method call was successful, and %lu returned values available.\n",
-                   (unsigned long)outputSize);
-
             for (size_t i = 0; i < outputSize; i++) {
                 UA_String* uas = (UA_String*)ptr_output[i].data;
                 memcpy(&timestamp, uas->data, uas->length);
@@ -139,12 +134,10 @@ int startclient(int argc, char *argv[])
             int64_t serverTimeInt;
             char c;
             int scanned = sscanf(&timestamp, "%" SCNd64 "%c", &serverTimeInt, &c);
-            printf("serverTimeInt: ");
-            printf("%" PRId64 "\n", serverTimeInt);
+            //printf("serverTimeInt: ");printf("%" PRId64 "\n", serverTimeInt);
 
             int64_t clientTimeInt = clientTime.tv_sec * 1000000000 + clientTime.tv_nsec;
-            printf("clientTimeInt: ");
-            printf("%" PRId64 "\n", clientTimeInt);
+            //printf("clientTimeInt: ");printf("%" PRId64 "\n", clientTimeInt);
 
             int64_t latency = serverTimeInt - clientTimeInt;
             printf("latency: ");
@@ -161,20 +154,14 @@ int startclient(int argc, char *argv[])
             strftime(time_string, sizeof(time_string), "%H:%M:%S", timeinfo);
             
             fprintf(file, "%s,", time_string);
-
-            // Write the data row in the CSV file
             fprintf(file, "%" PRId64 "\n", latency);
 
-             fclose(file);
-                printf("File closed\n");
-                    
+            fclose(file);   
                 }
         else {
             printf("Method call was unsuccessful, and %x returned values available.\n", retval);
         }
     }
-
-    // Close the output file
 
     UA_Client_disconnect(client);
     UA_Client_delete(client);
