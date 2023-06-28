@@ -95,8 +95,7 @@ int startclient(int argc, char *argv[])
     } 
 
 /*Repeat call*/
-//while(true)
-while (!shouldTerminate)
+while(true)
 { 
     printf("Check 1\n");
     file = fopen("output.csv", "w"); 
@@ -148,18 +147,11 @@ while (!shouldTerminate)
         printf("%" PRId64 "\n", latency);
         fclose(file);
         printf("Check 2\n");
-
-        if (shouldTerminate) 
-        {
-            break;
-        }
-
     }
     else 
     {
         printf("Method call was unsuccessful, and %x returned values available.\n", retval);
     }
-
 }
     UA_Client_disconnect(client);
     UA_Client_delete(client);
