@@ -24,21 +24,11 @@ UA_Client* client = NULL;
 UA_Variant value;  
 struct timespec ts;
 
-/*UA_Boolean running = true; 
+UA_Boolean running = true; 
 void signalHandler(int sig) 
 { 
     running = false; 
 } 
-*/
-int shouldTerminate = 0;
-
-// Signal handler function
-void signalHandler(int signum) {
-    if (signum == SIGINT) {
-        printf("Received interrupt signal. Terminating...\n");
-        shouldTerminate = 1;
-    }
-}
 
 FILE *file;
 
