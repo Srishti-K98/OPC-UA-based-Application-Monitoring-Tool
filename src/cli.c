@@ -22,7 +22,6 @@ int main(int argc, char* argv[])
         } 
         if (strcmp(argv[2], "server") == 0)  
         { 
-            printf("Check 1");
             startserver();                                                                        //start server                                                    
         }  
         else if (strcmp(argv[2], "client") == 0)  
@@ -43,23 +42,11 @@ int main(int argc, char* argv[])
                 address = argv[3]; 
             } 
             pid_t pid = fork(); 
-            if (pid == 0)  
-            { 
-                printf("Check 1");
+            if (pid > 0)
+            {
                 startclient(argc, argv);                                                  //start client                                
                 exit(0); 
-            }  
-            else if (pid > 0)  
-            { 
-                //signal(SIGINT, signalHandler);  // Handle Ctrl+C in the parent process
-                printf("Check 3");
-                wait(NULL);
-            } 
-            else 
-            { 
-               perror("Fork failed"); 
-               return 1; 
-            } 
+            }
         } 
         else  
         { 
