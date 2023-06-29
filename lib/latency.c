@@ -86,7 +86,7 @@ int startserver()
 
 
 
-int startclient(int argc, char *argv[]) 
+int startclient(char *argv[]) 
 { 
     UA_Boolean running = true;
 
