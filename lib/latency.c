@@ -87,16 +87,27 @@ int startserver()
 } 
 
 
+
+
 int startclient(int argc, char *argv[]) 
 { 
     UA_Boolean running = true;
+
+    if (argc < 2)  
+    { 
+        printf("Invalid number of arguments.\n"); 
+        printf("Usage: %s <server_address>\n", argv[0]); 
+        return 1; 
+    } 
+
+    const char* serverAddress = argv[3]; 
 
     client = UA_Client_new();
     UA_ClientConfig_setDefault(UA_Client_getConfig(client));
 
     // Connect to the server
-    UA_StatusCode status = UA_Client_connect(client, "opc.tcp://localhost:4840");
-    if (status != UA_STATUSCODE_GOOD) {
+    UA_StatusCode retval = UA_Client_connect(client, serverAddress);
+    if (retval != UA_STATUSCODE_GOOD) {
         printf("Failed to connect to the server\n");
         UA_Client_delete(client);
         return -1;
@@ -123,7 +134,8 @@ int startclient(int argc, char *argv[])
         UA_StatusCode retval = UA_Client_call(client, UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER),
                                               UA_NODEID_NUMERIC(1, 62541), 0, NULL, &outputSize, &ptr_output);
 
-        //printf("Client method call time: ");printf("%ld%09ld\n", clientTime.tv_sec, clientTime.tv_nsec);
+        printf("Client method call time: ");
+        printf("%ld%09ld\n", clientTime.tv_sec, clientTime.tv_nsec);
 
         if (retval == UA_STATUSCODE_GOOD) {
             for (size_t i = 0; i < outputSize; i++) {
@@ -134,10 +146,12 @@ int startclient(int argc, char *argv[])
             int64_t serverTimeInt;
             char c;
             int scanned = sscanf(&timestamp, "%" SCNd64 "%c", &serverTimeInt, &c);
-            //printf("serverTimeInt: ");printf("%" PRId64 "\n", serverTimeInt);
+            printf("serverTimeInt: ");
+            printf("%" PRId64 "\n", serverTimeInt);
 
             int64_t clientTimeInt = clientTime.tv_sec * 1000000000 + clientTime.tv_nsec;
-            //printf("clientTimeInt: ");printf("%" PRId64 "\n", clientTimeInt);
+            printf("clientTimeInt: ");
+            printf("%" PRId64 "\n", clientTimeInt);
 
             int64_t latency = serverTimeInt - clientTimeInt;
             printf("latency: ");
