@@ -1,8 +1,5 @@
 #include "latency.h" 
 
-//UA_Boolean running = true;
-// latency.h
-
 UA_Boolean running = true;
 UA_Boolean terminateRequested = false;
 
