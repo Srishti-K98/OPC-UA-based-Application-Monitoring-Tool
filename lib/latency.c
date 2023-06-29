@@ -90,15 +90,7 @@ int startclient(int argc, char *argv[])
 { 
     UA_Boolean running = true;
 
-    if (argc < 2)  
-    { 
-        printf("Invalid number of arguments.\n"); 
-        printf("Usage: %s <server_address>\n", argv[0]); 
-        return 1; 
-    } 
-
-    const char* serverAddress = argv[3]; 
-
+    const char* serverAddress = argv[3];
     client = UA_Client_new();
     UA_ClientConfig_setDefault(UA_Client_getConfig(client));
 
@@ -157,12 +149,14 @@ int startclient(int argc, char *argv[])
             clock_gettime(CLOCK_REALTIME, &ts);
     
             time_t current_time = ts.tv_sec;  // Get the current time in seconds
-            
             struct tm* timeinfo;
             timeinfo = localtime(&current_time);
-            
-            char time_string[9];
-            strftime(time_string, sizeof(time_string), "%H:%M:%S", timeinfo);
+
+            // Create a char array to store the ISO 8601 formatted time
+            char time_string[21];  // Increased size to accommodate the full ISO 8601 format
+
+            // Use strftime to format the time according to ISO 8601
+            strftime(time_string, sizeof(time_string), "%Y-%m-%dT%H:%M:%S%z", timeinfo);
             
             fprintf(file, "%s,", time_string);
             fprintf(file, "%" PRId64 "\n", latency);
