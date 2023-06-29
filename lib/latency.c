@@ -17,7 +17,7 @@ helloWorldMethodCallback(UA_Server *server,
                          const UA_NodeId *objectId, void *objectContext,
                          size_t inputSize, const UA_Variant *input,
                          size_t outputSize, UA_Variant *output) 
-    {
+{
     UA_String outputStr = UA_STRING_NULL;
     
     // Get the current time using clock_gettime
@@ -41,7 +41,8 @@ helloWorldMethodCallback(UA_Server *server,
 }
 
 static void
-addHelloWorldMethod(UA_Server *server) {
+addHelloWorldMethod(UA_Server *server) 
+{
     UA_Argument inputArgument;
     UA_Argument_init(&inputArgument);
     inputArgument.description = UA_LOCALIZEDTEXT("en-US", "Empty");
@@ -72,7 +73,6 @@ addHelloWorldMethod(UA_Server *server) {
                             0, NULL, 1, &outputArgument, NULL, NULL);
 }
 
-
 int startserver() 
 { 
     signal(SIGINT, signalHandler); 
@@ -84,9 +84,6 @@ int startserver()
     UA_Server_delete(server);
     return retval == UA_STATUSCODE_GOOD ? EXIT_SUCCESS : EXIT_FAILURE; 
 } 
-
-
-
 
 int startclient(char *argv[]) 
 { 
@@ -104,15 +101,12 @@ int startclient(char *argv[])
         return -1;
     }
 
-
-
-    // Create the method call
     size_t outputSize;
     char timestamp[30];
     UA_Variant *ptr_output;
     struct timespec clientTime;
 
-    // Open the output file for writing
+    // Create the method call in a loop to calculate latency
     while (running && !terminateRequested)
     {
         sleep(1);
@@ -157,7 +151,7 @@ int startclient(char *argv[])
             timeinfo = localtime(&current_time);
 
             // Create a char array to store the ISO 8601 formatted time
-            char time_string[21];  // Increased size to accommodate the full ISO 8601 format
+            char time_string[21]; 
 
             // Use strftime to format the time according to ISO 8601
             strftime(time_string, sizeof(time_string), "%Y-%m-%dT%H:%M:%SZ", timeinfo);
@@ -166,14 +160,13 @@ int startclient(char *argv[])
             fprintf(file, "%" PRId64 "\n", latency);
 
             fclose(file);   
-                }
-        else {
+        }
+        else 
+        {
             printf("Method call was unsuccessful, and %x returned values available.\n", retval);
         }
     }
-
     UA_Client_disconnect(client);
     UA_Client_delete(client);
-
     return 0;
 }
