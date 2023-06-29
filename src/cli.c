@@ -41,12 +41,7 @@ int main(int argc, char* argv[])
             { 
                 address = argv[3]; 
             } 
-            pid_t pid = fork(); 
-            if (pid > 0)
-            {
-                startclient(argc, argv);                                                  //start client                                
-                exit(0); 
-            }
+            startclient(argc, argv);                                                  //start client                                
         } 
         else  
         { 
