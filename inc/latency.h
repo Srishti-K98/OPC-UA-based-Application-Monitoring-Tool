@@ -29,4 +29,4 @@ FILE *file;
 //function declarations 
 int startserver(); 
 //int startclient(const char* address); 
-int startclient(int argc, char *argv[]); 
+int startclient(char *argv[]); 
