@@ -22,9 +22,11 @@ UA_Server* server = NULL;
 UA_Client* client = NULL;     
 UA_Variant value;  
 struct timespec ts;
+char* address;
 
 FILE *file;
 
 //function declarations 
 int startserver(); 
+//int startclient(const char* address); 
 int startclient(int argc, char *argv[]); 
