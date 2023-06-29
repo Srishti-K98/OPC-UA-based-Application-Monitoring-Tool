@@ -30,7 +30,7 @@ int main(int argc, char* argv[])
                 printf("Usage: %s start client <address>\n", argv[0]); 
                 return 1; 
             } 
-            startclient(argc, argv);                                                         //start client                                
+            startclient(argv);                                                         //start client                                
         } 
         else  
         { 
