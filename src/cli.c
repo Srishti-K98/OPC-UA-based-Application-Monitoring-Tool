@@ -1,7 +1,5 @@
 #include "latency.h" 
 
-void processCommand(const char* command, char* ipAddress); 
-
 int main(int argc, char* argv[]) 
 { 
     if (argc < 2)  
@@ -32,16 +30,7 @@ int main(int argc, char* argv[])
                 printf("Usage: %s start client <address>\n", argv[0]); 
                 return 1; 
             } 
-            char* address = strstr(argv[3], "://"); 
-            if (address != NULL)  
-            { 
-                address += 3;  
-            }  
-            else  
-            { 
-                address = argv[3]; 
-            } 
-            startclient(argc, argv);                                                              //start client                                
+            startclient(argc, argv);                                                         //start client                                
         } 
         else  
         { 
