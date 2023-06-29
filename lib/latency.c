@@ -116,6 +116,7 @@ int startclient(char *argv[])
             printf("Error opening the file.\n");
             return 1;
         }
+
         clock_gettime(CLOCK_REALTIME, &clientTime);
 
         UA_StatusCode retval = UA_Client_call(client, UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER),
