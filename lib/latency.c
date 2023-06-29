@@ -3,7 +3,8 @@
 UA_Boolean running = true;
 UA_Boolean terminateRequested = false;
 
-void signalHandler(int sig) {
+void signalHandler(int sig) 
+{
     running = false;
     terminateRequested = true;
 }
@@ -15,7 +16,8 @@ helloWorldMethodCallback(UA_Server *server,
                          const UA_NodeId *methodId, void *methodContext,
                          const UA_NodeId *objectId, void *objectContext,
                          size_t inputSize, const UA_Variant *input,
-                         size_t outputSize, UA_Variant *output) {
+                         size_t outputSize, UA_Variant *output) 
+    {
     UA_String outputStr = UA_STRING_NULL;
     
     // Get the current time using clock_gettime
@@ -102,6 +104,8 @@ int startclient(char *argv[])
         return -1;
     }
 
+
+
     // Create the method call
     size_t outputSize;
     char timestamp[30];
@@ -156,7 +160,7 @@ int startclient(char *argv[])
             char time_string[21];  // Increased size to accommodate the full ISO 8601 format
 
             // Use strftime to format the time according to ISO 8601
-            strftime(time_string, sizeof(time_string), "%Y-%m-%dT%H:%M:%S%z", timeinfo);
+            strftime(time_string, sizeof(time_string), "%Y-%m-%dT%H:%M:%SZ", timeinfo);
             
             fprintf(file, "%s,", time_string);
             fprintf(file, "%" PRId64 "\n", latency);
