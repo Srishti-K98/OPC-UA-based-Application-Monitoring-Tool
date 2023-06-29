@@ -41,7 +41,7 @@ int main(int argc, char* argv[])
             { 
                 address = argv[3]; 
             } 
-            startclient(argc, argv);                                                  //start client                                
+            startclient(argc, argv);                                                              //start client                                
         } 
         else  
         { 
@@ -60,7 +60,6 @@ int main(int argc, char* argv[])
     { 
         printf("Unknown command. Type '%s help' to see available commands.\n", argv[0]); 
         return 1; 
-    } 
-
+    }
     return 0; 
 } 
