@@ -27,6 +27,5 @@ char* address;
 FILE *file;
 
 //function declarations 
-int startserver(); 
-//int startclient(const char* address); 
+int startserver();
 int startclient(char *argv[]); 
