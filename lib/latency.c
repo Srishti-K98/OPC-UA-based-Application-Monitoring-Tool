@@ -11,7 +11,7 @@ void signalHandler(int sig)
 
 
 static UA_StatusCode
-helloWorldMethodCallback(UA_Server *server,
+getServerTimeMethodCallback(UA_Server *server,
                          const UA_NodeId *sessionId, void *sessionHandle,
                          const UA_NodeId *methodId, void *methodContext,
                          const UA_NodeId *objectId, void *objectContext,
@@ -41,7 +41,7 @@ helloWorldMethodCallback(UA_Server *server,
 }
 
 static void
-addHelloWorldMethod(UA_Server *server) 
+addgetServerTimeMethod(UA_Server *server) 
 {
     UA_Argument inputArgument;
     UA_Argument_init(&inputArgument);
@@ -69,7 +69,7 @@ addHelloWorldMethod(UA_Server *server)
                             UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER),
                             UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
                             UA_QUALIFIEDNAME(1, "current t ime"),
-                            helloAttr, &helloWorldMethodCallback,
+                            helloAttr, &getServerTimeMethodCallback,
                             0, NULL, 1, &outputArgument, NULL, NULL);
 }
 
@@ -78,7 +78,7 @@ int startserver()
     signal(SIGINT, signalHandler); 
 
     server = UA_Server_new();
-    addHelloWorldMethod(server);
+    addgetServerTimeMethod(server);
 
     UA_StatusCode retval = UA_Server_runUntilInterrupt(server);
     UA_Server_delete(server);
@@ -111,11 +111,11 @@ int startclient(char *argv[])
     {
         sleep(1);
         file = fopen("MyOutput.csv", "a"); 
-    if (file == NULL) 
-    {
-        printf("Error opening the file.\n");
-        return 1;
-    }
+        if (file == NULL) 
+        {
+            printf("Error opening the file.\n");
+            return 1;
+        }
         clock_gettime(CLOCK_REALTIME, &clientTime);
 
         UA_StatusCode retval = UA_Client_call(client, UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER),
